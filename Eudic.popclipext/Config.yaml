@@ -1,7 +1,7 @@
 name: Eudic
 identifier: com.kimizen.popclip.eudic
 description: Look up the selected text in Eudic (欧路词典), the Chinese-English dictionary.
-keywords: eudic, dictionary, chinese, english, lookup, 欧路词典, 词典, 查词, 翻译
+keywords: eudic dictionary chinese english lookup 欧路词典 词典 查词 翻译 百科
 popclipVersion: 6221
 icon: 'svg:<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v15H6.5A2.5 2.5 0 0 0 4 19.5z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20v5H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M9 7h7"/></svg>'
 app:
@@ -12,14 +12,31 @@ app:
     - com.eusoft.freeeudic
     - com.eusoft.eudic
 options:
+  - identifier: eudic_edition
+    type: multiple
+    label:
+      en: Eudic Edition
+      zh-hans: Eudic 版本
+    description:
+      en: Which Eudic app to open. Pick Lite or Enhanced if you have both installed.
+      zh-hans: 要打开哪个 Eudic。若两个版本都装了，请指定 Lite 或 增强版。
+    values:
+      - auto
+      - com.eusoft.freeeudic
+      - com.eusoft.eudic
+    valueLabels:
+      - 自动
+      - Lite 版
+      - 增强版
+    defaultValue: auto
   - identifier: lookup_mode
     type: multiple
     label:
       en: Lookup Mode
       zh-hans: 查询方式
     description:
-      en: Choose what Eudic opens for the selected text.
-      zh-hans: 选择用欧路的哪个界面查询选中的文字。
+      en: What the main button looks up.
+      zh-hans: 主按钮的查询方式。
     values:
       - dict
       - wiki
@@ -29,5 +46,27 @@ options:
     defaultValue: dict
 actions:
   - title: Search In Eudic
-    url: eudic://{popclip option lookup_mode}/{popclip text}
-    cleanQuery: true
+    icon: 'svg:<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v15H6.5A2.5 2.5 0 0 0 4 19.5z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20v5H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M9 7h7"/></svg>'
+    javaScript: |
+      const edition = popclip.options.eudic_edition;
+      const mode = popclip.options.lookup_mode;
+      const opts = edition === 'auto' ? {} : { app: edition };
+      await popclip.openTemplateUrl('eudic://' + mode + '/***', popclip.input.text, opts);
+    submenu:
+      - title: 词典
+        javaScript: |
+          const edition = popclip.options.eudic_edition;
+          const opts = edition === 'auto' ? {} : { app: edition };
+          await popclip.openTemplateUrl('eudic://dict/***', popclip.input.text, opts);
+      - title: 百科
+        javaScript: |
+          const edition = popclip.options.eudic_edition;
+          const opts = edition === 'auto' ? {} : { app: edition };
+          await popclip.openTemplateUrl('eudic://wiki/***', popclip.input.text, opts);
+      - title: 朗读
+        icon: symbol:speaker.wave.2
+        serviceName: Eudic • 朗读选中内容
+      - title: 启动 Eudic
+        icon: symbol:arrow.up.forward.app
+        requirements: []
+        url: eudic://
