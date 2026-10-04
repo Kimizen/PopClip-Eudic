@@ -3,7 +3,7 @@ identifier: com.kimizen.popclip.eudic
 description: Look up the selected text in Eudic (欧路词典), the Chinese-English dictionary.
 keywords: eudic, dictionary, chinese, english, lookup, 欧路词典, 词典, 查词, 翻译
 popclipVersion: 6221
-icon: eudic.png
+icon: 'svg:<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v15H6.5A2.5 2.5 0 0 0 4 19.5z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20v5H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M9 7h7"/></svg>'
 app:
   name: Eudic
   link: https://www.eudic.net/
