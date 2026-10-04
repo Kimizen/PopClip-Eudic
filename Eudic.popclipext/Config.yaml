@@ -1,0 +1,33 @@
+name: Eudic
+identifier: com.kimizen.popclip.eudic
+description: Look up the selected text in Eudic (欧路词典), the Chinese-English dictionary.
+keywords: eudic, dictionary, chinese, english, lookup, 欧路词典, 词典, 查词, 翻译
+popclipVersion: 6221
+icon: eudic.png
+app:
+  name: Eudic
+  link: https://www.eudic.net/
+  checkInstalled: true
+  bundleIdentifiers:
+    - com.eusoft.freeeudic
+    - com.eusoft.eudic
+options:
+  - identifier: lookup_mode
+    type: multiple
+    label:
+      en: Lookup Mode
+      zh-hans: 查询方式
+    description:
+      en: Choose what Eudic opens for the selected text.
+      zh-hans: 选择用欧路的哪个界面查询选中的文字。
+    values:
+      - dict
+      - wiki
+    valueLabels:
+      - 词典
+      - 百科
+    defaultValue: dict
+actions:
+  - title: Search In Eudic
+    url: eudic://{popclip option lookup_mode}/{popclip text}
+    cleanQuery: true
